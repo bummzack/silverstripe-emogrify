@@ -1,0 +1,8 @@
+---
+Name: emogrifierplugin-config
+after: emailconfig
+---
+
+SilverStripe\Control\Email\SwiftMailer:
+  swift_plugins:
+    - Bummzack\SilverStripeEmogrify\EmogrifierPlugin
