@@ -2,6 +2,8 @@
 
 namespace Bummzack\SilverStripeEmogrify;
 
+use Pelago\Emogrifier;
+use SilverStripe\Assets\File;
 use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Core\Path;
 
@@ -17,7 +19,7 @@ class EmogrifierPlugin extends \Bummzack\SwiftMailer\EmogrifyPlugin\EmogrifierPl
 
     /**
      * The default CSS file that should be used for styling Emails.
-     * Can be set via config YAML and overridden individually via `CssFile` prop.
+     * Can be set via config YAML.
      *
      * @config
      * @var string
@@ -25,43 +27,42 @@ class EmogrifierPlugin extends \Bummzack\SwiftMailer\EmogrifyPlugin\EmogrifierPl
     private static $css_file = null;
 
     /**
-     * @var string
+     * EmogrifierPlugin constructor.
+     * @param Emogrifier|null $emogrifier
      */
-    private $cssFile = null;
-
-    public function __construct()
+    public function __construct(Emogrifier $emogrifier = null)
     {
-        parent::__construct();
+        parent::__construct($emogrifier);
 
         if ($file = $this->config()->css_file) {
-            $this->setCssFile($file);
+            $this->loadCssFromFile($file);
         }
     }
 
     /**
-     * Get the CSS file path that should be used to style emails
-     * @return string
-     */
-    public function getCssFile()
-    {
-        return $this->cssFile;
-    }
-
-    /**
-     * Set the CSS file to use
-     * @param string $file the path to the CSS file to load, relative to `BASE_PATH`
+     * Load CSS styles from file and apply them to the current emogrifier instance.
+     * _Attention:_ loaded styles will be lost if the emogrifier instance is set to a different one!
+     * @param string $file the path to the CSS file to load,
+     * if the file path isn't absolute, it's assumed to be relative to `BASE_PATH`
      * @return $this
      */
-    public function setCssFile($file)
+    public function loadCssFromFile($file)
     {
-        $path = Path::join(BASE_PATH, $file);
-        if (!file_exists($path)) {
-            throw new \InvalidArgumentException('CSS file at "' . $path . '" does not exist');
+        if (file_exists($file)) {
+            $path = $file;
+        } else {
+            $path = Path::join(BASE_PATH, $file);
+            if (!file_exists($path)) {
+                throw new \InvalidArgumentException('File at "' . $path . '" does not exist');
+            }
+        }
+
+        if (strtolower(File::get_file_extension($path)) !== 'css') {
+            throw new \InvalidArgumentException('File "' . $path . '" does not have .css extension.');
         }
 
         $this->getEmogrifier()->setCss(file_get_contents($path));
 
-        $this->cssFile = $file;
         return $this;
     }
 }

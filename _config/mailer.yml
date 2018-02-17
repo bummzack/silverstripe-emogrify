@@ -1,5 +1,5 @@
 ---
-Name: emogrifierplugin-config
+Name: emogrifierplugin-mailerconfig
 after: emailconfig
 ---
 
