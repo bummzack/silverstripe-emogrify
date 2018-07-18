@@ -9,7 +9,8 @@
         "emogrifier"
     ],
     "require": {
-        "silverstripe/recipe-core": "^4.1",
+        "silverstripe/framework": "^4.1",
+        "silverstripe/assets": "^1.1",
         "bummzack/swiftmailer-emogrifyplugin" : "^0.1"
     },
     "require-dev": {
