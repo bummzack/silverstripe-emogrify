@@ -11,7 +11,7 @@
     "require": {
         "silverstripe/framework": "^4.1",
         "silverstripe/assets": "^1.1",
-        "bummzack/swiftmailer-emogrifyplugin" : "^0.1"
+        "bummzack/swiftmailer-emogrifyplugin" : "^0.2"
     },
     "require-dev": {
         "phpunit/PHPUnit": "^5.7"
