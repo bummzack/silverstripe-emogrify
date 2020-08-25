@@ -14,7 +14,8 @@
         "bummzack/swiftmailer-emogrifyplugin" : "^0.2"
     },
     "require-dev": {
-        "phpunit/PHPUnit": "^5.7"
+        "phpunit/phpunit": "^5.7",
+        "squizlabs/php_codesniffer": "^3"
     },
     "extra": {
         "branch-alias": {
@@ -28,7 +29,7 @@
         }
     },
     "scripts": {
-        "lint": "phpcs -s src/ tests/"
+        "lint": "vendor/bin/phpcs -s src/ tests/"
     },
     "minimum-stability": "dev",
     "prefer-stable": true
