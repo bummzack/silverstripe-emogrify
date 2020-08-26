@@ -11,12 +11,13 @@ matrix:
   include:
     - php: 5.6
       env:
+        - PHP5=1
         - PHPCS_TEST=1
         - PHPUNIT_TEST=1
     - php: 7.0
       env:
         - PHPUNIT_TEST=1
-    - php: 7.1
+    - php: 7.4
       env:
         - PHPUNIT_COVERAGE_TEST=1
 
@@ -31,6 +32,7 @@ before_script:
   - composer update
 
 script:
+  - if [[ $PHP5 ]]; then composer require silverstripe/assets 1.4.8; fi
   - if [[ $PHPUNIT_TEST ]]; then vendor/bin/phpunit; fi
   - if [[ $PHPUNIT_COVERAGE_TEST ]]; then phpdbg -qrr vendor/bin/phpunit --coverage-clover=coverage.xml; fi
   - if [[ $PHPCS_TEST ]]; then composer run-script lint; fi
