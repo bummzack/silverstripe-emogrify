@@ -9,9 +9,8 @@
         "emogrifier"
     ],
     "require": {
-        "silverstripe/framework": "^4.1",
-        "silverstripe/assets": "^1.1",
-        "bummzack/swiftmailer-emogrifyplugin" : "^0.2"
+        "silverstripe/recipe-core": "^4.9",
+        "bummzack/swiftmailer-emogrifyplugin" : "^0.3"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.7",

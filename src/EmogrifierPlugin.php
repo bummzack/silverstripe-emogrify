@@ -2,7 +2,8 @@
 
 namespace Bummzack\SilverStripeEmogrify;
 
-use Pelago\Emogrifier;
+use Bummzack\SwiftMailer\EmogrifyPlugin\EmogrifierPlugin as SwiftmailerEmogrifierPlugin;
+use Pelago\Emogrifier\CssInliner;
 use SilverStripe\Assets\File;
 use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Core\Path;
@@ -13,7 +14,7 @@ use SilverStripe\Core\Path;
  *
  * @package Bummzack\SilverStripeEmogrify
  */
-class EmogrifierPlugin extends \Bummzack\SwiftMailer\EmogrifyPlugin\EmogrifierPlugin
+class EmogrifierPlugin extends SwiftmailerEmogrifierPlugin
 {
     use Configurable;
 
@@ -27,21 +28,19 @@ class EmogrifierPlugin extends \Bummzack\SwiftMailer\EmogrifyPlugin\EmogrifierPl
     private static $css_file = null;
 
     /**
-     * EmogrifierPlugin constructor.
-     * @param Emogrifier|null $emogrifier
+     * @return string CSS styles
      */
-    public function __construct(Emogrifier $emogrifier = null)
+    public function getCSSContent()
     {
-        parent::__construct($emogrifier);
-
         if ($file = $this->config()->css_file) {
             $this->loadCssFromFile($file);
         }
+
+        return parent::getCSSContent();
     }
 
     /**
      * Load CSS styles from file and apply them to the current emogrifier instance.
-     * _Attention:_ loaded styles will be lost if the emogrifier instance is set to a different one!
      * @param string $file the path to the CSS file to load,
      * if the file path isn't absolute, it's assumed to be relative to `BASE_PATH`
      * @return $this
@@ -61,7 +60,7 @@ class EmogrifierPlugin extends \Bummzack\SwiftMailer\EmogrifyPlugin\EmogrifierPl
             throw new \InvalidArgumentException('File "' . $path . '" does not have .css extension.');
         }
 
-        $this->getEmogrifier()->setCss(file_get_contents($path));
+        $this->setCSSContent(file_get_contents($path));
 
         return $this;
     }
