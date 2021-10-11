@@ -18,10 +18,6 @@ matrix:
     - php: 7.4
       env:
         - PHPUNIT_COVERAGE_TEST=1
-    - php: 8.0
-      env:
-        - PHPUNIT_TEST=1
-
 
 before_script:
   # Init PHP
