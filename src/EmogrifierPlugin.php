@@ -2,7 +2,6 @@
 
 namespace Bummzack\SilverStripeEmogrify;
 
-use Pelago\Emogrifier;
 use SilverStripe\Assets\File;
 use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Core\Path;
@@ -22,18 +21,15 @@ class EmogrifierPlugin extends \Bummzack\SwiftMailer\EmogrifyPlugin\EmogrifierPl
      * Can be set via config YAML.
      *
      * @config
-     * @var string
+     * @var string|null
      */
     private static $css_file = null;
 
     /**
      * EmogrifierPlugin constructor.
-     * @param Emogrifier|null $emogrifier
      */
-    public function __construct(Emogrifier $emogrifier = null)
+    public function __construct()
     {
-        parent::__construct($emogrifier);
-
         if ($file = $this->config()->css_file) {
             $this->loadCssFromFile($file);
         }
@@ -61,7 +57,7 @@ class EmogrifierPlugin extends \Bummzack\SwiftMailer\EmogrifyPlugin\EmogrifierPl
             throw new \InvalidArgumentException('File "' . $path . '" does not have .css extension.');
         }
 
-        $this->getEmogrifier()->setCss(file_get_contents($path));
+        $this->setCss(file_get_contents($path));
 
         return $this;
     }

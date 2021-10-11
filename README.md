@@ -10,7 +10,7 @@ Easily integrate Emogrifier into SilverStripe and send Emails with inlined CSS a
 ## Installation and Requirements
 
  - Requires the [EmogrifierPlugin](https://github.com/bummzack/swiftmailer-emogrifyplugin) and its dependencies.
- - SilverStripe 4.1+
+ - SilverStripe 4.9+
 
 Install via composer:
 
