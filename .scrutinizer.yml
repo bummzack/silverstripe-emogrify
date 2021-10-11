@@ -4,6 +4,8 @@ checks:
   php: true
 
 build:
+  environment:
+    php: 7.4
   nodes:
     analysis:
       tests:
